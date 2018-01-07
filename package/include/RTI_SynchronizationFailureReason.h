@@ -1,0 +1,1 @@
+../src/rti/RTI_SynchronizationFailureReason.h

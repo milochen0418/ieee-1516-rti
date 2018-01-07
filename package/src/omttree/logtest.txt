@@ -1,0 +1,64 @@
+StrictCounter 測試...
+建立一 StrictCounter  SC
+請輸入SC.requestID執行次數:第1次，SC.requestID結果=1
+第2次，SC.requestID結果=2
+第3次，SC.requestID結果=3
+第4次，SC.requestID結果=4
+第5次，SC.requestID結果=5
+請輸入SC.releaseID執行次數:第1次，SC.releaseID
+第2次，SC.releaseID
+第3次，SC.releaseID
+第4次，SC.releaseID
+第5次，SC.releaseID
+測試UniqueStringCollection...
+測試UniqueStringCollection.insert(OHT TEST 1)...
+UniqueStringCollection.size() = 1
+UniqueStringCollection.isExist(OHT TEST 1) = 1
+UniqueStringCollection.query(str1.c_str()) = 0xbfa3bfd8
+測試UniqueStringCollection.insert(OHT TEST 2)...
+UniqueStringCollection.isExist(OHT TEST 2) = 1
+UniqueStringCollection.isExist(OMT TEST 3) = 1
+UniqueStringCollection.isExist(ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz) = 1
+UniqueStringCollection.isExist(OMT TEST 4) = 1
+UniqueStringCollection.isExist(
+) = 1
+UniqueStringCollection.isExist() = 1
+UniqueStringCollection.size() = 7
+UniqueStringCollection.isExist(OHT TEST 2) = True
+UniqueStringCollection.query(str2.c_str()) = 0xbfa3bfd8
+測試UniqueStringCollection.cancel(OHT TEST 1)...
+UniqueStringCollection.isExist(OHT TEST 1) = False
+UniqueStringCollection.size() = 6
+測試UniqueStringCollection.cancel(OHT TEST 2)...
+UniqueStringCollection.isExist(OHT TEST 1) = False
+UniqueStringCollection.size() = 5
+測試UniqueStringCollection.query("aaa")...
+usc.query("aaa") = 0
+
+ Reading JTFpFOM.xml...
+Parseing Succeed!!
+測試OHT<int>::iterator...
+----------OHT method No 4 getObjectClassName()測試----------
+Class [ 1]->name = HLAobjectRoot
+getObjectClassName(0) = 
+
+getObjectClassName(__handle + 100) = 
+
+----------------------------------------------
+Level : 1
+
+----------OHT method No 5 getObjectClassHandle()測試----------
+getObjectClassHandle(HLAobjectRoot) = 1
+getObjectClassHandle("NULL") = 0
+getObjectClassHandle("") = 0
+getObjectClassHandle("\n") = 0
+----------------------------------------------
+
+----------OHT method No 11 isObjectClass()測試----------
+isObjectClass(HLAobjectRoot) = 1
+isObjectClass("\n") = 0
+isObjectClass("") = 0
+----------------------------------------------
+
+----------OHT method No 9 getInheritedNumber()測試-----------
+parser->getInheritedNumber(1) = 19

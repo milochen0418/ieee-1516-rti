@@ -1,0 +1,20 @@
+(FED
+  (Federation fedfile3)
+  (FEDversion v1_3 )
+  (spaces
+  )
+  (objects
+    (class objectRoot
+      (class Obj
+        (attribute buffer reliable receive )
+      )
+    )
+  )
+  (interactions
+    (class interactionRoot best_effort receive
+      (class emptyInteraction best_effort receive
+        (parameter p0)
+      )
+    )
+  )
+)

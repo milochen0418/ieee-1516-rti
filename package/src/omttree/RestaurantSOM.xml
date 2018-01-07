@@ -1,0 +1,826 @@
+<?xml version="1.0"?>
+<!DOCTYPE objectModel SYSTEM "HLA.dtd">
+<objectModel
+    DTDversion="1516.2"
+    name="RestaurantExample"
+    type="SOM"
+    version="1.0 Alpha"
+    date="1/1/1998"
+    purpose="Example of an object model for a restaurant federate"
+    appDomain="Restaurant operations"
+    sponsor="Federated foods"
+    pocName="Mr. Joseph Smith"
+    pocOrg="Joe's Place"
+    pocPhone="977-555-1234"
+    pocEmail="smithj@fedfoods.com"
+    references="www.fedfoods.com/restsim.html"
+    other="See Mobil International Restaurant Guide for more information">
+    <objects>
+        <objectClass
+            name="HLAobjectRoot"
+            sharing="Neither">
+            <attribute
+                name="HLAprivilegeToDeleteObject"
+                dataType="NA"
+                updateType="NA"
+                updateCondition="NA"
+                ownership="NoTransfer"
+                sharing="PublishSubscribe"
+                dimensions="NA"
+                transportation="NA"
+                order="Receive"/>
+            <objectClass
+                name="Customer"
+                sharing="PublishSubscribe"
+                semantics="Patron of the restaurant" />
+            <objectClass
+                name="Bill"
+                sharing="PublishSubscribe"
+                semantics="Statement of money owed by the customer" />
+            <objectClass
+                name="Order"
+                sharing="PublishSubscribe"
+                semantics="Specific items requested by a customer" />
+            <objectClass
+                name="Employee"
+                sharing="PublishSubscribe"
+                semantics="A person working for the restaurant" >
+                <attribute
+                    name="PayRate"
+                    dataType="DollarRate"
+                    updateType="Conditional"
+                    updateCondition="Merit increase"
+                    updateConditionNotes="1"
+                    ownership="DivestAcquire"
+                    sharing="PublishSubscribe"
+                    dimensions="NA"
+                    transportation="HLAreliable"
+                    order="TimeStamp"
+                    semantics="Amount the employee is paid per hour" />
+                <attribute
+                    name="YearsOfService"
+                    dataType="Years"
+                    updateType="Periodic"
+                    updateCondition="1/year"
+                    ownership="DivestAcquire"
+                    sharing="PublishSubscribe"
+                    dimensions="NA"
+                    transportation="HLAreliable"
+                    order="TimeStamp"
+                    semantics="Number of years the employee has worked for the restaurant" />
+                <attribute
+                    name="HomeNumber"
+                    dataType="StringC"
+                    updateType="Conditional"
+                    updateCondition="Employee request"
+                    ownership="DivestAcquire"
+                    sharing="PublishSubscribe"
+                    dimensions="NA"
+                    transportation="HLAreliable"
+                    order="TimeStamp"
+                    semantics="Employee home phone number" />
+                <attribute
+                    name="HomeAddress"
+                    dataType="AddressType"
+                    updateType="Conditional"
+                    updateCondition="Employee request"
+                    ownership="DivestAcquire"
+                    sharing="PublishSubscribe"
+                    dimensions="NA"
+                    transportation="HLAreliable"
+                    order="TimeStamp"
+                    semantics="Employee home address" />
+                <objectClass
+                    name="Greeter"
+                    sharing="PublishSubscribe"/>
+                <objectClass
+                    name="Waiter"
+                    sharing="PublishSubscribe">
+                    <attribute
+                        name="Efficiency"
+                        dataType="WaiterValue"
+                        updateType="Conditional"
+                        updateCondition="Performance review"
+                        ownership="DivestAcquire"
+                        sharing="PublishSubscribe"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Efficiency rating of waiter" />
+                    <attribute
+                        name="Cheerfulness"
+                        dataType="WaiterValue"
+                        updateType="Conditional"
+                        updateCondition="Performance review"
+                        ownership="DivestAcquire"
+                        sharing="PublishSubscribe"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Cheerfulness of waiter" />
+                    <attribute
+                        name="State"
+                        dataType="WaiterTasks"
+                        updateType="Conditional"
+                        updateCondition="Work flow"
+                        ownership="DivestAcquire"
+                        sharing="PublishSubscribe"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="What the waiter is doing" />
+                </objectClass>
+                <objectClass
+                    name="Cashier"
+                    sharing="PublishSubscribe"
+                    semantics="Employee who collects money" />
+                <objectClass
+                    name="Dishwasher"
+                    sharing="PublishSubscribe"
+                    semantics="Cleaner of plates, pots, and utensils" />
+                <objectClass
+                    name="Cook"
+                    sharing="PublishSubscribe"
+                    semantics="Preparer of the meal" />
+            </objectClass>
+            <objectClass
+                name="Food"
+                sharing="Subscribe"
+                semantics="Products served at the restaurant" >
+                <objectClass
+                    name="MainCourse"
+                    sharing="PublishSubscribe"
+                    semantics="Principal dish" />
+                <objectClass
+                    name="Drink"
+                    sharing="Subscribe"
+                    semantics="Liquid accompanyment to meal" >
+                    <attribute
+                        name="NumberCups"
+                        dataType="DrinkCount"
+                        updateType="Conditional"
+                        updateCondition="Customer request"
+                        ownership="DivestAcquire"
+                        sharing="PublishSubscribe"
+                        dimensions="SodaFlavor BarQuantity "
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Number of drinks" />
+                    <objectClass
+                        name="Water"
+                        sharing="PublishSubscribe"
+                        semantics="Tap water" />
+                    <objectClass
+                        name="Coffee"
+                        sharing="PublishSubscribe"
+                        semantics="Brewed coffee" />
+                    <objectClass
+                        name="Soda"
+                        sharing="PublishSubscribe"
+                        semantics="Carbonated beverage" >
+                        <attribute
+                            name="Flavor"
+                            dataType="FlavorType"
+                            updateType="Conditional"
+                            updateCondition="Customer request"
+                            ownership="DivestAcquire"
+                            sharing="PublishSubscribe"
+                            dimensions="SodaFlavor BarQuantity "
+                            transportation="HLAreliable"
+                            order="TimeStamp"
+                            semantics="Flavor of soda" />
+                    </objectClass>
+                </objectClass>
+                <objectClass
+                    name="Appetizer"
+                    sharing="Subscribe"
+                    semantics="Portion served before main course" >
+                    <objectClass
+                        name="Soup"
+                        sharing="Subscribe"
+                        semantics="Soup course" >
+                        <objectClass
+                            name="ClamChowder"
+                            sharing="Subscribe"
+                            semantics="Clam chowder" >
+                            <objectClass
+                                name="Manhattan"
+                                sharing="PublishSubscribe"
+                                semantics="Manhattan style clam chowder" />
+                            <objectClass
+                                name="NewEngland"
+                                sharing="PublishSubscribe"
+                                semantics="New England style clam chowder" />
+                        </objectClass>
+                        <objectClass
+                            name="BeefBarley"
+                            sharing="PublishSubscribe"
+                            semantics="Beef barley soup" />
+                    </objectClass>
+                    <objectClass
+                        name="Nachos"
+                        sharing="PublishSubscribe"
+                        semantics="Nachos" />
+                </objectClass>
+                <objectClass
+                    name="Entree"
+                    sharing="Subscribe"
+                    semantics="Principal dish" >
+                    <objectClass
+                        name="Beef"
+                        sharing="PublishSubscribe"
+                        semantics="Beef entree" />
+                    <objectClass
+                        name="Chicken"
+                        sharing="PublishSubscribe"
+                        semantics="Chicken entree" />
+                    <objectClass
+                        name="Seafood"
+                        sharing="PublishSubscribe"
+                        semantics="Seafood entree" >
+                        <objectClass
+                            name="Fish"
+                            sharing="PublishSubscribe"
+                            semantics="Fish of the day" />
+                        <objectClass
+                            name="Shrimp"
+                            sharing="PublishSubscribe"
+                            semantics="Shrimp scampi" />
+                        <objectClass
+                            name="Lobster"
+                            sharing="PublishSubscribe"
+                            semantics="Lobster thermador" />
+                    </objectClass>
+                    <objectClass
+                        name="Pasta"
+                        sharing="PublishSubscribe"
+                        semantics="Pasta entree" />
+                </objectClass>
+                <objectClass
+                    name="SideDish"
+                    sharing="Subscribe"
+                    semantics="ala carte dishes" >
+                    <objectClass
+                        name="Corn"
+                        sharing="PublishSubscribe"
+                        semantics="Corn side dish" />
+                    <objectClass
+                        name="Broccoli"
+                        sharing="PublishSubscribe"
+                        semantics="Broccoli side dish" />
+                    <objectClass
+                        name="BakedPotato"
+                        sharing="PublishSubscribe"
+                        semantics="Baked potato side dish" />
+                </objectClass>
+                <objectClass
+                    name="Dessert"
+                    sharing="Subscribe"
+                    semantics="Deserts" >
+                    <objectClass
+                        name="Cake"
+                        sharing="PublishSubscribe"
+                        semantics="Cake dessert" />
+                    <objectClass
+                        name="IceCream"
+                        sharing="PublishSubscribe"
+                        semantics="Ice cream dessert" >
+                        <objectClass
+                            name="Chocolate"
+                            sharing="PublishSubscribe"
+                            semantics="Chocolate ice cream" />
+                        <objectClass
+                            name="Vanilla"
+                            sharing="PublishSubscribe"
+                            semantics="vanilla ice cream" />
+                    </objectClass>
+                </objectClass>
+            </objectClass>
+        </objectClass>
+    </objects>
+    <interactions>
+        <interactionClass
+            name="HLAinteractionRoot"
+            sharing="Publish"
+            dimensions="NA"
+            transportation="HLAreliable"
+            order="TimeStamp">
+            <interactionClass
+                name="CustomerTransactions"
+                sharing="Publish"
+                dimensions="NA"
+                transportation="HLAreliable"
+                order="TimeStamp"
+                semantics="The base class of interactions between customers and 
+                    employee" >
+                <interactionClass
+                    name="CustomerSeated"
+                    sharing="PublishSubscribe"
+                    dimensions="NA"
+                    transportation="HLAreliable"
+                    order="TimeStamp"
+                    semantics="Customer has occupied a table" />
+                <interactionClass
+                    name="OrderTaken"
+                    sharing="Publish"
+                    dimensions="NA"
+                    transportation="HLAreliable"
+                    order="TimeStamp"
+                    semantics="Waiter has taken customers order" >
+                    <interactionClass
+                        name="FromKidsMenu"
+                        sharing="Publish"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Customer ordered from children menu" />
+                    <interactionClass
+                        name="FromAdultMenu"
+                        sharing="Publish"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Customer ordered from normal menu" />
+                </interactionClass>
+                <interactionClass
+                    name="FoodServed"
+                    sharing="Publish"
+                    dimensions="NA"
+                    transportation="HLAreliable"
+                    order="TimeStamp"
+                    semantics="Waiter has served food" >
+                    <interactionClass
+                        name="DrinkServed"
+                        sharing="Publish"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Waiter has served a drink" />
+                    <interactionClass
+                        name="AppetizerServed"
+                        sharing="Publish"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Waiter has served appetizers" />
+                    <interactionClass
+                        name="MainCourseServed"
+                        sharing="Publish"
+                        dimensions="WaiterId "
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Waiter has served entree" >
+                        <parameter
+                            name="TemperatureOk"
+                            dataType="ServiceStat"
+                            semantics="Temperature of the food when served" />
+                        <parameter
+                            name="AccuracyOk"
+                            dataType="ServiceStat"
+                            semantics="Whether the correct food was served" />
+                        <parameter
+                            name="TimelinessOk"
+                            dataType="Boolean"
+                            semantics="Timeliness of food delivery" />
+                    </interactionClass>
+                    <interactionClass
+                        name="DessertServed"
+                        sharing="Publish"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Waiter has served dessert" />
+                </interactionClass>
+                <interactionClass
+                    name="CustomerPays"
+                    sharing="Publish"
+                    dimensions="NA"
+                    transportation="HLAreliable"
+                    order="TimeStamp"
+                    semantics="Customer has paid bill" >
+                    <interactionClass
+                        name="ByCreditCard"
+                        sharing="Publish"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Credit card payment" />
+                    <interactionClass
+                        name="ByCash"
+                        sharing="Publish"
+                        dimensions="NA"
+                        transportation="HLAreliable"
+                        order="TimeStamp"
+                        semantics="Cash payment" />
+                </interactionClass>
+                <interactionClass
+                    name="CustomerLeaves"
+                    sharing="PublishSubscribe"
+                    dimensions="NA"
+                    transportation="HLAreliable"
+                    order="TimeStamp"
+                    semantics="Customer departs restaurant" />
+            </interactionClass>
+        </interactionClass>
+    </interactions>
+    <dimensions>
+        <dimension
+            name="SodaFlavor"
+            dataType="FlavorType"
+            normalization="Linear enumerated (Flavor, [Cola, Orange, RootBeer])"
+            value="[0.0 .. 1.0)"/>
+        <dimension
+            name="BarQuantity"
+            dataType="DrinkCount"
+            normalization="Linear (NumberCups, 1, 25)"
+            value="[0.0)"/>
+        <dimension
+            name="WaiterId"
+            dataType="EmplId"
+            normalization="Linear (WaiterId, 1, 20)"
+            value="Excluded"/>
+    </dimensions>
+    <time>
+        <timeStamp
+            dataType="TimeType"
+            semantics="Floating point value expressed in minutes"/>
+        <lookahead
+            dataType="TimeType"
+            semantics="Floating point value expressed in minutes"/>
+    </time>
+    <tags>
+        <updateReflectTag
+            dataType="NA"
+            semantics="NA"/>
+        <sendReceiveTag
+            dataType="NA"
+            semantics="NA"/>
+        <deleteRemoveTag
+            dataType="StringC"
+            semantics="Reason for deletion"/>
+        <divestitureRequestTag
+            dataType="NA"
+            semantics="NA"/>
+        <divestitureCompletionTag
+            dataType="PriorityLevel"
+            semantics="High value for transfer to Manager"/>
+        <acquisitionRequestTag
+            dataType="NA"
+            semantics="NA"/>
+        <requestUpdateTag
+            dataType="NA"
+            semantics="NA"/>
+    </tags>
+    <synchronizations>
+        <synchronization
+            label="InitialPublish"
+            dataType="NA"
+            capability="Achieve"
+            semantics="Achieved when all classes are published and subscribed, and 
+                all initially present objects are registered" />
+        <synchronization
+            label="InitialUpdate"
+            dataType="NA"
+            capability="Achieve"
+            semantics="Achieved when attribute values for all initially present 
+                objects are updated" />
+        <synchronization
+            label="BeginTimeAdvance"
+            dataType="NA"
+            capability="Achieve"
+            semantics="Achieved when time management services are invoked" />
+        <synchronization
+            label="PauseExecution"
+            dataType="TimeType"
+            capability="RegisterAchieve"
+            semantics="Achieved when the time advance after the time in the user-supplied 
+                tag is attained; time advance requests should then cease" />
+    </synchronizations>
+    <transportations>
+        <transportation
+            name="HLAreliable"
+            description="Provide reliable delivery of data in the sense that TCP/IP 
+                delivers its data reliably" />
+        <transportation
+            name="HLAbestEffort"
+            description="Make an effort to deliver data in the sense that UDP provides 
+                best-effort delivery" />
+        <transportation
+            name="LowLatency"
+            description="Choose the delivery mechanism that results in the lowest 
+                latency from service initiation to callback invocation at the receiving 
+                federate" />
+    </transportations>
+    <switches
+        autoProvide="Disabled"
+        conveyRegionDesignatorSets="Disabled"
+        attributeScopeAdvisory="Enabled"
+        attributeRelevanceAdvisory="Enabled"
+        objectClassRelevanceAdvisory="Enabled"
+        interactionRelevanceAdvisory="Enabled"
+        serviceReporting="Disabled"/>
+    <dataTypes>
+        <basicDataRepresentations>
+            <basicData
+                name="Octet"
+                size="8"
+                interpretation="Bit pattern"
+                endian="Little"
+                encoding="Byte"/>
+            <basicData
+                name="Hextet"
+                size="16"
+                interpretation="Bit pattern"
+                endian="Little"
+                encoding="BigEndianBytePair"/>
+            <basicData
+                name="Float"
+                size="32"
+                interpretation="Floating point value"
+                endian="Little"
+                encoding="XDRfloatingPoint"/>
+            <basicData
+                name="DPfloat"
+                size="64"
+                interpretation="Double precision floating point value"
+                endian="Little"
+                encoding="XDRdoublePrecisionFloatingPoint"/>
+            <basicData
+                name="Short"
+                size="16"
+                interpretation="2s compliment signed integer"
+                endian="Little"
+                encoding="BigEndianBytePair"/>
+            <basicData
+                name="UnsignedShort"
+                size="16"
+                interpretation="Binary integer"
+                endian="Little"
+                encoding="BigEndianBytePair"/>
+            <basicData
+                name="Integer"
+                size="32"
+                interpretation="2s compliment signed integer"
+                endian="Little"
+                encoding="XDRinteger"/>
+            <basicData
+                name="UnsignedInteger"
+                size="32"
+                interpretation="Binary integer"
+                endian="Little"
+                encoding="XDRunsignedInteger"/>
+            <basicData
+                name="HyperInteger"
+                size="64"
+                interpretation="2s compliment signed integer"
+                endian="Little"
+                encoding="XDRhyperInteger"/>
+            <basicData
+                name="UnsignedHyperInteger"
+                size="64"
+                interpretation="Binary integer"
+                endian="Little"
+                encoding="XDRunsignedHyperInteger"/>
+        </basicDataRepresentations>
+        <simpleDataTypes>
+            <simpleData
+                name="ASCII"
+                representation="Octet"
+                units="NA"
+                resolution="NA"
+                accuracy="NA"
+                semantics="ANSI standard" />
+            <simpleData
+                name="TimeType"
+                representation="Float"
+                units="Minutes"
+                resolution="0.01667"
+                accuracy="NA"
+                semantics="Time representation" />
+            <simpleData
+                name="DollarRate"
+                representation="Float"
+                units="$/hr"
+                resolution="0.01"
+                accuracy="Perfect"
+                semantics="Cost per hour" />
+            <simpleData
+                name="Years"
+                representation="Short"
+                units="Years"
+                resolution="NA"
+                accuracy="Perfect"
+                semantics="Elapsed time in years" />
+            <simpleData
+                name="DrinkCount"
+                representation="Short"
+                units="Cups"
+                resolution="NA"
+                accuracy="Perfect"
+                semantics="Measure of number of drinks" />
+            <simpleData
+                name="EmplId"
+                representation="Short"
+                units="NA"
+                resolution="NA"
+                accuracy="Perfect"
+                semantics="Employee identifier" />
+            <simpleData
+                name="RateScale"
+                representation="Short"
+                units="NA"
+                resolution="NA"
+                accuracy="NA"
+                semantics="Evaluation of staff where 1 = best" />
+        </simpleDataTypes>
+        <enumeratedDataTypes>
+            <enumeratedData
+                name="PriorityLevel"
+                representation="Short"
+                semantics="General three level priority indicator" >
+                <enumerator
+                    name="Low"
+                    values="0"/>
+                <enumerator
+                    name="Medium"
+                    values="1"/>
+                <enumerator
+                    name="High"
+                    values="2"/>
+            </enumeratedData>
+            <enumeratedData
+                name="Boolean"
+                representation="Short"
+                semantics="True/false indicator" >
+                <enumerator
+                    name="True"
+                    values="Non-zero"/>
+                <enumerator
+                    name="False"
+                    values="0"/>
+            </enumeratedData>
+            <enumeratedData
+                name="WaiterTasks"
+                representation="Short"
+                semantics="Possible activities of waiters" >
+                <enumerator
+                    name="TakingOrder"
+                    values="1"/>
+                <enumerator
+                    name="Serving"
+                    values="2"/>
+                <enumerator
+                    name="Cleaning"
+                    values="3"/>
+                <enumerator
+                    name="CalculatingBill"
+                    values="4"/>
+                <enumerator
+                    name="Other"
+                    values="5"/>
+            </enumeratedData>
+            <enumeratedData
+                name="FlavorType"
+                representation="Short"
+                semantics="Possible flavors of soda" >
+                <enumerator
+                    name="Cola"
+                    values="101"/>
+                <enumerator
+                    name="Orange"
+                    values="102"/>
+                <enumerator
+                    name="RootBeer"
+                    values="103"/>
+                <enumerator
+                    name="Cream"
+                    values="104"/>
+            </enumeratedData>
+            <enumeratedData
+                name="ExperienceLevel"
+                representation="Short"
+                semantics="Level of experience of waiters" >
+                <enumerator
+                    name="Trainee"
+                    values="0"/>
+                <enumerator
+                    name="Apprentice"
+                    values="1"/>
+                <enumerator
+                    name="Journeyman"
+                    values="2"/>
+                <enumerator
+                    name="Senior"
+                    values="3"/>
+                <enumerator
+                    name="Temporary"
+                    values="4"/>
+                <enumerator
+                    name="Master"
+                    values="5"/>
+            </enumeratedData>
+        </enumeratedDataTypes>
+        <arrayDataTypes>
+            <arrayData
+                name="StringC"
+                dataType="ASCII"
+                cardinality="Dynamic"
+                encoding="NullTerminatedArray"
+                semantics="C string representation" />
+            <arrayData
+                name="StringP"
+                dataType="ASCII"
+                cardinality="Dynamic"
+                encoding="XDRvariableLengthArray"
+                semantics="Pascal-like string representation" />
+            <arrayData
+                name="Employees"
+                dataType="EmplId"
+                cardinality="10"
+                encoding="XDRfixedLengthArray"
+                semantics="Identifiers of employees currently working" />
+            <arrayData
+                name="AddressBook"
+                dataType="AddressType"
+                cardinality="Dynamic"
+                encoding="SparseArray"
+                semantics="Collection of all employee addresses" />
+        </arrayDataTypes>
+        <fixedRecordDataTypes>
+            <fixedRecordData
+                name="ServiceStat"
+                encoding="XDRstructure"
+                semantics="Check-off on whether the server performed properly on 
+                    elements of the meal" >
+                <field
+                    name="EntreeOk"
+                    dataType="Boolean"
+                    semantics="Entree status" />
+                <field
+                    name="Veggy1Ok"
+                    dataType="Boolean"
+                    semantics="Vegetable 1 status" />
+                <field
+                    name="Veggy2Ok"
+                    dataType="Boolean"
+                    semantics="Vegetable 2 status" />
+            </fixedRecordData>
+            <fixedRecordData
+                name="AddressType"
+                encoding="XDRstructure"
+                semantics="Mailing address" >
+                <field
+                    name="Name"
+                    dataType="StringC"
+                    semantics="Employee name" />
+                <field
+                    name="Street"
+                    dataType="StringC"
+                    semantics="Street address" />
+                <field
+                    name="City"
+                    dataType="StringC"
+                    semantics="City name" />
+                <field
+                    name="State"
+                    dataType="StringC"
+                    semantics="State abbreviation" />
+                <field
+                    name="Zip"
+                    dataType="StringC"
+                    semantics="Postal code" />
+            </fixedRecordData>
+        </fixedRecordDataTypes>
+        <variantRecordDataTypes>
+            <variantRecordData
+                name="WaiterValue"
+                discriminant="ValIndex"
+                dataType="ExperienceLevel"
+                encoding="XDRdiscriminatedUnion"
+                semantics="Datatype for waiter performance rating value" >
+                <alternative
+                    enumerator="Trainee"
+                    name="CoursePassed"
+                    dataType="Boolean"
+                    semantics="Ratings scale for employees under training" />
+                <alternative
+                    enumerator="[Apprentice .. Senior], Master"
+                    name="Rating"
+                    dataType="RateScale"
+                    semantics="Ratings scale for permanent employees" />
+                <alternative
+                    enumerator="HLAother"
+                    name="NA"
+                    dataType="NA"
+                    semantics="All others" />
+            </variantRecordData>
+        </variantRecordDataTypes>
+    </dataTypes>
+    <notes>
+        <note
+            name="1"
+            semantics="Merit raises are not provided according to any regular time 
+                interval; they are provided on a supervisor's recommendation based 
+                on evidence of exceptional effort and performance" />
+    </notes>
+</objectModel>
